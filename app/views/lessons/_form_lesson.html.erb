@@ -1,0 +1,18 @@
+<!-- filepath: /Users/emilienleborgne/code/Emilien-LB/RetroVision/app/views/lessons/_form.html.erb -->
+<%= form_with(model: [lesson.student || @student, lesson], local: true) do |form| %>
+  <div class="mb-3">
+    <%= form.label :title, "Titre" %>
+    <%= form.text_field :title, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :date, "Date" %>
+    <%= form.date_field :date, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :notes, "Notes" %>
+    <%= form.text_area :notes, class: "form-control" %>
+  </div>
+  <div>
+    <%= form.submit class: "btn btn-primary" %>
+  </div>
+<% end %>

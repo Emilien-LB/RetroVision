@@ -1,0 +1,58 @@
+<h2><%= @student.first_name %> <%= @student.last_name %></h2>
+
+<%= link_to "Ajouter une leçon", new_student_lesson_path(@student), class: "btn btn-primary mb-3" %>
+<%= link_to "Retour à la liste", students_path, class: "btn btn-secondary" %>
+
+<% if @student.permit_date.present? %>
+  <p>
+    <strong>Date de permis :</strong>
+    <%= @student.permit_date.strftime("%d/%B/%Y") %>
+  </p>
+<% end %>
+
+<% if @student.permit_date.present? && @student.result.present? %>
+  <p>
+    <strong>Note du permis :</strong>
+    <%= @student.result.presence || "Non renseignée" %>
+  </p>
+<% end %>
+
+<p>
+  <strong>Type de boîte :</strong>
+  <% if @student.gearbox_type == "automatic" %>
+    <span class="btn btn-primary btn-sm">Automatique</span>
+  <% elsif @student.gearbox_type == "manual" %>
+    <span class="btn btn-secondary btn-sm">Manuelle</span>
+  <% else %>
+    <span class="btn btn-outline-secondary btn-sm">Non renseigné</span>
+  <% end %>
+</p>
+
+<h2>Cours de l'élève</h2>
+<ul>
+  <% @student.lessons.order(date: :desc, created_at: :desc).each do |lesson| %>
+    <li>
+      <strong><%= lesson.title %></strong> - <%= lesson.date.strftime("%d/%m/%Y") if lesson.date.present? %>
+      <br>
+      <em><%= lesson.notes %></em>
+      <br>
+      <%= link_to "Modifier", edit_student_lesson_path(@student, lesson), class: "btn btn-secondary btn-sm" %>
+      <%= link_to "Supprimer", student_lesson_path(@student, lesson), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class:"ms-3 text-danger" %>
+      <!-- ...rappels... -->
+      <strong class="mt-2">Rappels</strong>
+      <ul>
+        <% lesson.reminders.each do |reminder| %>
+          <li>
+            <%= reminder.title %> - <%= reminder.date.strftime("%d/%m/%Y") if reminder.date.present? %>
+            <% if reminder.success_rate.present? %>
+              (<%= reminder.success_rate %>%)
+            <% end %>
+            <%= link_to "Modifier", edit_student_lesson_reminder_path(@student, lesson, reminder), class: "btn btn-outline-secondary btn-sm ms-2" %>
+            <%= link_to "Supprimer", student_lesson_reminder_path(@student, lesson, reminder), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class:"ms-3 text-danger" %>
+          </li>
+        <% end %>
+      </ul>
+      <%= render "reminders/form_reminders", lesson: lesson, reminder: lesson.reminders.new %>
+    </li>
+  <% end %>
+</ul>

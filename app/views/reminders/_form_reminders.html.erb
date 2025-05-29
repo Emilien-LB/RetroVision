@@ -1,0 +1,18 @@
+<!-- filepath: /Users/emilienleborgne/code/Emilien-LB/RetroVision/app/views/reminders/_form_reminders.html.erb -->
+<%= form_with(model: [lesson.student, lesson, reminder], local: true) do |form| %>
+  <div class="mb-3">
+    <%= form.label :note, "Note du rappel" %>
+    <%= form.text_field :note, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :date, "Date du rappel" %>
+    <%= form.date_field :date, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :success_rate, "Taux de réussite" %>
+    <%= form.number_field :success_rate, class: "form-control", min: 0, max: 100 %>
+  </div>
+  <div>
+    <%= form.submit class: "btn btn-primary btn-sm" %>
+  </div>
+<% end %>

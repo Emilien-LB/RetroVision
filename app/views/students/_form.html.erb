@@ -1,0 +1,30 @@
+<h1>Ajouter un élève</h1>
+<%= form_with(model: student, local: true) do |form| %>
+  <div class="mb-3">
+    <%= form.label :first_name, "Prénom" %>
+    <%= form.text_field :first_name, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :last_name, "Nom" %>
+    <%= form.text_field :last_name, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :permit_date, "Date de permis" %>
+    <%= form.date_field :permit_date, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :result, "Note du permis" %>
+    <%= form.text_field :result, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :gearbox_type, "Type de boîte" %><br>
+    <%= form.radio_button :gearbox_type, "automatic" %>
+    <%= form.label :gearbox_type_automatic, "Automatique" %>
+    <%= form.radio_button :gearbox_type, "manual" %>
+    <%= form.label :gearbox_type_manual, "Manuelle" %>
+  </div>
+  <div>
+    <%= form.submit class: "btn btn-primary" %>
+  </div>
+<% end %>
+<%= link_to "Retour à la liste ", students_path, class: "btn btn-secondary mt-2" %>

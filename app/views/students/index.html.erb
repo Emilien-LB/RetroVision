@@ -1,0 +1,11 @@
+<h1>Liste des élèves</h1>
+
+<%= link_to "Ajouter un nouvel élève", new_student_path, class: "btn btn-primary" %>
+<% @students.each do |student| %>
+  <div>
+    <%= student.first_name %> <%= student.last_name %>
+    <%= link_to "Voir", student_path(student), class: "btn btn-info" %>
+    <%= link_to "Modifier", edit_student_path(student), class: "btn btn-secondary" %>
+    <%= link_to "Supprimer", student_path(student), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class:"ms-3 text-danger" %>
+  </div>
+<% end %>
